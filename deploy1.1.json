@@ -1013,7 +1013,7 @@
             },
             "properties": {
                 "hardwareProfile": {
-                    "vmSize": "Standard_DS2ss_v2"
+                    "vmSize": "Standard_DS2_v2"
                 },
                 "storageProfile": {
                     "imageReference": {
