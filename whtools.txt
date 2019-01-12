@@ -3,3 +3,6 @@ https://github.com/gentilkiwi/mimikatz
 
 hashcat
 https://hashcat.net/hashcat/
+
+password list
+https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/Common-Credentials/10-million-password-list-top-1000000.txt
