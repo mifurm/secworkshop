@@ -1,2 +1,5 @@
 mimikatz
 https://github.com/gentilkiwi/mimikatz
+
+hashcat
+https://hashcat.net/hashcat/
