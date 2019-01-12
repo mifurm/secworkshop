@@ -1,11 +1,8 @@
-#
-# Deploy the Dependency agent to every VM in a Resource Group
-#
-
 $version = "9.4"
 $ExtPublisher = "Microsoft.Azure.Monitoring.DependencyAgent"
 $OsExtensionMap = @{ "Windows" = "DependencyAgentWindows"; "Linux" = "DependencyAgentLinux" }
-$rmgroup = "<Your Resource Group Here>"
+#choose propoer sec group
+$rmgroup = "sec01rg"
 
 Get-AzureRmVM -ResourceGroupName $rmgroup |
 ForEach-Object {
@@ -14,10 +11,12 @@ ForEach-Object {
     $os = $_.StorageProfile.OsDisk.OsType
     $location = $_.Location
     $vmRmGroup = $_.ResourceGroupName
+    If ($name -notlike 'kali*'){
     "${name}: ${os} (${location})"
     Date -Format o
     $ext = $OsExtensionMap.($os.ToString())
     $result = Set-AzureRmVMExtension -ResourceGroupName $vmRmGroup -VMName $name -Location $location `
     -Publisher $ExtPublisher -ExtensionType $ext -Name "DependencyAgent" -TypeHandlerVersion $version
     $result.IsSuccessStatusCode
+    }
 }
