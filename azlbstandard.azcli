@@ -1,0 +1,35 @@
+#how outbout routing works: 
+#https://docs.microsoft.com/en-gb/azure/load-balancer/load-balancer-outbound-connections
+#https://azure.microsoft.com/en-us/updates/load-balancer-tcp-reset-on-idle/
+#https://docs.microsoft.com/en-gb/azure/load-balancer/configure-load-balancer-outbound-cli
+
+az account set --subscription "AzureSponsored"
+
+az network public-ip create --resource-group adminserver --name mypublicipinbound --sku standard
+az network public-ip create --resource-group adminserver --name mypublicipoutbound --sku standard
+
+az network lb create \
+    --resource-group adminserver \
+    --name lb \
+    --sku standard \
+    --backend-pool-name bepool \
+    --frontend-ip-name myfrontendinbound \
+    --public-ip-address mypublicipinbound
+
+az network lb frontend-ip create \
+    --resource-group adminserver \
+    --name myfrontendoutbound \
+    --lb-name lb \
+    --public-ip-address mypublicipoutbound
+
+az network lb outbound-rule create \
+ --resource-group adminserver \
+ --lb-name lb \
+ --name outboundrule \
+ --frontend-ip-configs myfrontendoutbound \
+ --protocol All \
+ --idle-timeout 15 \
+ --outbound-ports 10000 \
+ --address-pool bepool
+
+ az vm create --name vm01lb --resource-group adminserver --size Standard_D1 --image UbuntuLTS --public-ip-address ""
