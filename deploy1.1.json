@@ -587,12 +587,6 @@
                             "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(variables('vmName'),'NIC01'))]"
                         }
                     ]
-                },
-                "diagnosticsProfile": {
-                    "bootDiagnostics": {
-                        "enabled": true,
-                        "storageUri": "[concat('https://', parameters('diagnosticsStorageAccountName'), '.blob.core.windows.net/')]"
-                    }
                 }
             },
             "resources": [
@@ -681,12 +675,6 @@
                             "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(variables('vmName1'),'NIC01'))]"
                         }
                     ]
-                },
-                "diagnosticsProfile": {
-                    "bootDiagnostics": {
-                        "enabled": true,
-                        "storageUri": "[concat('https://', parameters('diagnosticsStorageAccountName'), '.blob.core.windows.net/')]"
-                    }
                 }
             },
             "resources": [
@@ -779,12 +767,6 @@
                         }
                     ]
                 },
-                "diagnosticsProfile": {
-                    "bootDiagnostics": {
-                        "enabled": true,
-                        "storageUri": "[concat('https://', parameters('diagnosticsStorageAccountName'), '.blob.core.windows.net/')]"
-                    }
-                },
                 "licenseType": "Windows_Server"
             },
             "resources": [
@@ -812,7 +794,7 @@
               ],
             "tags": {
                 "Workshop": "[parameters('workshopName')]",
-                "OS": "Windows]",
+                "OS": "Windows",
                 "Version": "[parameters('scriptversion')]"
             }
         },
@@ -964,12 +946,6 @@
                         "provisionVmAgent": true
                     }
                 },
-                "diagnosticsProfile": {
-                    "bootDiagnostics": {
-                        "enabled": true,
-                        "storageUri": "[concat('https://', parameters('diagnosticsStorageAccountName'), '.blob.core.windows.net/')]"
-                    }
-                },
                 "licenseType": "Windows_Server"
             },
             "resources": [
@@ -1013,7 +989,7 @@
             },
             "properties": {
                 "hardwareProfile": {
-                    "vmSize": "Standard_DS2ss_v2"
+                    "vmSize": "Standard_DS1_v2"
                 },
                 "storageProfile": {
                     "imageReference": {
@@ -1047,12 +1023,6 @@
                             "id": "[resourceId('Microsoft.Network/networkInterfaces',concat(variables('jumphostvmname'),'NIC01'))]"
                         }
                     ]
-                },
-                "diagnosticsProfile": {
-                    "bootDiagnostics": {
-                        "enabled": true,
-                        "storageUri": "[concat('https://', parameters('diagnosticsStorageAccountName'), '.blob.core.windows.net/')]"
-                    }
                 }
             },
             "dependsOn": [
