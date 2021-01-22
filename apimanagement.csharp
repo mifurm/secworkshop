@@ -6,3 +6,25 @@
 }
 
 <rate-limit-by-key calls="5" renewal-period="20" counter-key="@(context.Request.Body.As<JObject>()["vehicleType"].ToString())" increment-condition="@(context.Response.StatusCode == 200)" />
+
+<rate-limit-by-key calls="5" renewal-period="20" counter-key="@{
+        try{
+          var requestBody = context.Request.Body?.As<string>(preserveContent: true);
+          if (requestBody == null) {
+                    return new JObject(
+                        new JProperty("errorCode", "ERROR_203"),
+                        new JProperty("errorMessage", "REQUEST BODY IS EMPTY")
+                        ).ToString();
+                }
+        XmlDocument xml = new XmlDocument();
+        xml.LoadXml(requestBody);
+        XmlNodeList list=xml.DocumentElement.GetElementsByTagName("TrackingNumber");
+        return list[0].InnerText;
+        }
+        catch (XmlException ex) {
+                return new JObject(
+                        new JProperty("errorCode", "ERROR_203"),
+                        new JProperty("errorMessage", "XML DOCUMENT NOT WELL FORMED")
+                        ).ToString();
+            }
+        }" increment-condition="@(context.Response.StatusCode == 200)" />
