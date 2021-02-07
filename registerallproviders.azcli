@@ -1,0 +1,2 @@
+az provider list --query "[].namespace" -o tsv | ForEach-Object {az provider register -n $_}
+az provider list --query "[].namespace" -o tsv | ForEach-Object {az provider unregister -n $_}
