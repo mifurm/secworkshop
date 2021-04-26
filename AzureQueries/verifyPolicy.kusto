@@ -1,0 +1,10 @@
+// check what policies have been evaluated
+// set the date and number of policies to evaluate 
+AzureActivity
+| where TimeGenerated > ago(7d) //to change
+| where OperationNameValue has "audit"
+| top 100 by TimeGenerated desc //to change 
+| extend policyDefinitionReferenceId_ = tostring(parse_json(tostring(parse_json(Properties).policies))[0].policyDefinitionReferenceId)
+| extend policyAssignmentName_ = tostring(parse_json(tostring(parse_json(Properties).policies))[0].policyAssignmentName)
+| extend policyDefinitionEffect_ = tostring(parse_json(tostring(parse_json(Properties).policies))[0].policyDefinitionEffect)
+| project TimeGenerated, SubscriptionId, ResourceProviderValue, OperationNameValue, Caller, CategoryValue, CorrelationId, ActivityStatusValue, Properties_d, policyDefinitionReferenceId_, ResourceGroup, Resource, policyAssignmentName_, policyDefinitionEffect_
