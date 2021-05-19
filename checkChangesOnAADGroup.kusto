@@ -1,6 +1,8 @@
+let securityGroup = "loganaltestgroup";
 AuditLogs
+| where TimeGenerated > ago(35min)
 | where OperationName == "Add member to group"
-| where TargetResources contains "loganaltestgroup"
+| where TargetResources contains securityGroup
 | extend InitiatedBy = tostring(parse_json(tostring(InitiatedBy.user)).userPrincipalName)
 | extend AddedUPN = tostring(TargetResources[0].userPrincipalName)
 | extend AADGroup = parse_json(tostring(parse_json(tostring(TargetResources[0].modifiedProperties))[1].newValue)) 
